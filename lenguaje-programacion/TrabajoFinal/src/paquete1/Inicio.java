@@ -3,7 +3,6 @@ package paquete1;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
-import paquete2.Datos;
 import paquete2.PlanCelular;
 import paquete3.PlanPostPagoMinutos;
 import paquete3.PlanPostPagoMegas;
@@ -17,20 +16,19 @@ public class Inicio {
         // TODO code application logic here
         Scanner entrada = new Scanner(System.in);
         Locale.setDefault(Locale.US);
-        ArrayList<PlanCelular> listaPlanes = new ArrayList<>();
+//        ArrayList<PlanCelular> listaPlanes = new ArrayList<>();
         Enlace c = new Enlace();
-        Datos datos = null;
         boolean bandera = true;
         int opcion;
 
-        String nombres;
-        String apellidos;
-        String pasaporte;
-        String ciudad;
-        String barrio;
-        String marcaCelular;
-        String modeloCelular;
-        int numeroCelular;
+        String nombres = "";
+        String apellidos = "";
+        String pasaporte = "";
+        String ciudad = "";
+        String barrio = "";
+        String marcaCelular = "";
+        String modeloCelular = "";
+        int numeroCelular = 0;
 
         double megasGigas;
         double costoGigas;
@@ -65,17 +63,6 @@ public class Inicio {
                 numeroCelular = entrada.nextInt();
                 entrada.nextLine();
 
-                datos = new Datos(
-                        nombres,
-                        apellidos,
-                        pasaporte,
-                        ciudad,
-                        barrio,
-                        marcaCelular,
-                        modeloCelular,
-                        numeroCelular);
-                c.establecerListaDatos();
-                c.insertarDatos(datos);
             }
 
             switch (opcion) {
@@ -89,15 +76,28 @@ public class Inicio {
                     System.out.println("Ingrese el costo de Minutos Internacionales: ");
                     double costoMinutoInternacionales = entrada.nextDouble();
                     entrada.nextLine();
+
+                    // Aquí están los datos del propietario
                     PlanPostPagoMinutos plan1 = new PlanPostPagoMinutos(
                             minutosNacionales,
                             costoMinutoNacional,
                             minutosInternacionales,
                             costoMinutoInternacionales,
-                            datos);
+                            nombres,
+                            apellidos,
+                            pasaporte,
+                            ciudad,
+                            barrio,
+                            marcaCelular,
+                            modeloCelular,
+                            numeroCelular
+                    );
                     plan1.calcularPagoMensual();
-                    listaPlanes.add(plan1);
+//                    listaPlanes.add(plan1);
+                    c.establecerListaPlan1();
+                    c.insertarPlan1(plan1);
                     break;
+
                 case 2:
                     System.out.println("Ingrese las megas expresado en Gigas: ");
                     megasGigas = entrada.nextDouble();
@@ -109,9 +109,19 @@ public class Inicio {
                             megasGigas,
                             costoGigas,
                             tarifaBase,
-                            datos);
+                            nombres,
+                            apellidos,
+                            pasaporte,
+                            ciudad,
+                            barrio,
+                            marcaCelular,
+                            modeloCelular,
+                            numeroCelular
+                    );
                     plan2.calcularPagoMensual();
-                    listaPlanes.add(plan2);
+//                    listaPlanes.add(plan2);
+                    c.establecerListaPlan2();
+                    c.insertarPlan2(plan2);
 
                     break;
                 case 3:
@@ -128,9 +138,19 @@ public class Inicio {
                             costoMinutos,
                             megasGigas,
                             costoGigas,
-                            datos);
+                            nombres,
+                            apellidos,
+                            pasaporte,
+                            ciudad,
+                            barrio,
+                            marcaCelular,
+                            modeloCelular,
+                            numeroCelular
+                    );
                     plan3.calcularPagoMensual();
-                    listaPlanes.add(plan3);
+//                    listaPlanes.add(plan3);
+                    c.establecerListaPlan3();
+                    c.insertarPlan3(plan3);
 
                     break;
                 case 4:
@@ -151,9 +171,19 @@ public class Inicio {
                             megasGigas,
                             costoGigas,
                             porcentajeDescuento,
-                            datos);
+                            nombres,
+                            apellidos,
+                            pasaporte,
+                            ciudad,
+                            barrio,
+                            marcaCelular,
+                            modeloCelular,
+                            numeroCelular
+                    );
                     plan4.calcularPagoMensual();
-                    listaPlanes.add(plan4);
+//                    listaPlanes.add(plan4);
+                    c.establecerListaPlan4();
+                    c.insertarPlan4(plan4);
 
                     break;
                 default:
@@ -167,14 +197,43 @@ public class Inicio {
             if (evaluador.equalsIgnoreCase("SALIR")) {
                 bandera = false;
 
-                for (int i = 0; i < c.obtenerListaDatos().size(); i++) {
-                    System.out.printf("%s", c.obtenerListaDatos().get(i));
+                c.establecerListaPlan1();
+                c.establecerListaPlan2();
+                c.establecerListaPlan3();
+                c.establecerListaPlan4();
+
+                System.out.println("**********************************************");
+                ArrayList<PlanPostPagoMinutos> plan1 = c.obtenerListaPlan1();
+                System.out.println("Plan Post Pago Minutos:\n");
+                for (PlanPostPagoMinutos dato : plan1) {
+                    System.out.println(dato);
+
                 }
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                for (PlanCelular lista : listaPlanes) {
-                    System.out.println(lista);
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+                System.out.println("**********************************************");
+                ArrayList<PlanPostPagoMegas> plan2 = c.obtenerListaPlan2();
+                System.out.println("Plan Post Pago Megas:\n");
+                for (PlanPostPagoMegas dato : plan2) {
+                    System.out.println(dato);
+
                 }
+
+                System.out.println("**********************************************");
+                ArrayList<PlanPostPagoMinutosMegas> plan3 = c.obtenerListaPlan3();
+                System.out.println("Plan Post Pago Minutos Megas:\n");
+                for (PlanPostPagoMinutosMegas dato : plan3) {
+                    System.out.println(dato);
+
+                }
+
+                System.out.println("**********************************************");
+                ArrayList<PlanPostPagoMinutosMegasEconomico> plan4 = c.obtenerListaPlan4();
+                System.out.println("Plan Post Pago Minutos Megas Economico:\n");
+                for (PlanPostPagoMinutosMegasEconomico dato : plan4) {
+                    System.out.println(dato);
+
+                }
+
             }
 
         }

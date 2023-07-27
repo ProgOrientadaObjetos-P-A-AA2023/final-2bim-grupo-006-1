@@ -1,6 +1,5 @@
 package paquete3;
 
-import paquete2.Datos;
 import paquete2.PlanCelular;
 
 public class PlanPostPagoMegas extends PlanCelular {
@@ -10,14 +9,12 @@ public class PlanPostPagoMegas extends PlanCelular {
     private double costoGigas;
     private double tarifaBase;
 
-    public PlanPostPagoMegas(double mG, double cG, double tB, Datos d) {
-        super(d);
-        megasGigas = mG;
+    public PlanPostPagoMegas(double mg, double cG, double tBase, String nom, String ape, String pas, String ciu, String barrio, String marca, String modelo, int num) {
+        super(nom, ape, pas, ciu, barrio, marca, modelo, num);
+        megasGigas = mg;
         costoGigas = cG;
-        tarifaBase = tB;
+        tarifaBase = tBase;
     }
-
-
 
     public void establecerMegasGigas(double mG) {
         megasGigas = mG;
@@ -50,20 +47,17 @@ public class PlanPostPagoMegas extends PlanCelular {
 
     @Override
     public String toString() {
-        String cadena = "\nPlan Post Pago Megas.\n\n";
-        cadena = String.format(""
-                + "%s"
+        String cadena = String.format(""
                 + "%s"
                 + "\tMegas expresado en Gigas: %.2f\n"
                 + "\tCosto por cada Giga: $ %.2f\n"
                 + "\tTarifa base: %.2f\n\n"
                 + "\tPago Mensual: $ %.2f\n",
-                cadena,
-                datos,
+                super.toString(),
                 megasGigas,
                 costoGigas,
                 tarifaBase,
-                obtenerPagoMensual());
+                pagoMensual);
         return cadena;
     }
 }

@@ -1,6 +1,5 @@
 package paquete3;
 
-import paquete2.Datos;
 import paquete2.PlanCelular;
 
 public class PlanPostPagoMinutos extends PlanCelular {
@@ -11,18 +10,13 @@ public class PlanPostPagoMinutos extends PlanCelular {
     private double minutosInternacionales;
     private double costoMinutoInternacionales;
 
-    public PlanPostPagoMinutos(double minutosNacionales, double costoMinutoNacional, 
-            double minutosInternacionales, double costoMinutoInternacionales,
-            Datos datos) {
-        super(datos);
-        this.minutosNacionales = minutosNacionales;
-        this.costoMinutoNacional = costoMinutoNacional;
-        this.minutosInternacionales = minutosInternacionales;
-        this.costoMinutoInternacionales = costoMinutoInternacionales;
+    public PlanPostPagoMinutos(double mN, double cMN, double mI, double cMI, String nom, String ape, String pas, String ciu, String barrio, String marca, String modelo, int num) {
+        super(nom, ape, pas, ciu, barrio, marca, modelo, num);
+        minutosNacionales = mN;
+        costoMinutoNacional = cMN;
+        minutosInternacionales = mI;
+        costoMinutoInternacionales = cMI;
     }
-
-
-    
 
     public void establecerMinutosNacionales(double mN) {
         minutosNacionales = mN;
@@ -64,22 +58,19 @@ public class PlanPostPagoMinutos extends PlanCelular {
 
     @Override
     public String toString() {
-        String cadena = "\nPlan Post Pago Minutos.\n\n";
-        cadena = String.format(""
-                + "%s"
+        String cadena = String.format(""
                 + "%s"
                 + "\tMinutos Nacionales: %.2f\n"
                 + "\tCosto Minuto Nacional: $ %.2f\n"
                 + "\tMinutos Internacionales: %.2f\n"
                 + "\tCosto Minuto Internacional: $ %.2f\n\n"
                 + "\tPago Mensual: $ %.2f\n",
-                cadena,
-                datos,
+                super.toString(),
                 minutosNacionales,
                 costoMinutoNacional,
                 minutosInternacionales,
                 costoMinutoInternacionales,
-                obtenerPagoMensual());
+                pagoMensual);
         return cadena;
     }
 
